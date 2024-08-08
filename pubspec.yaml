@@ -39,6 +39,10 @@ dependencies:
   firebase_auth:
   shared_preferences:
   cloud_firestore:
+  web: 0.4.0
+  uuid:
+  image_picker:
+  firebase_storage:
 
 dev_dependencies:
   flutter_test:

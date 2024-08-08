@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tts09bf/add_user.dart';
+import 'package:tts09bf/fetch_user.dart';
 import 'package:tts09bf/firebase_options.dart';
+import 'package:tts09bf/image_screen.dart';
 import 'package:tts09bf/login_screen.dart';
 import 'package:tts09bf/splash_screen.dart';
 
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: AddUser(),
+      home: ImageScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

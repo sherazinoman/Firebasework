@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class AddUser extends StatefulWidget {
   const AddUser({super.key});
@@ -17,9 +18,11 @@ class _AddUserState extends State<AddUser> {
   final TextEditingController userPassword = TextEditingController();
 
   void addData()async{
+    String userID = Uuid().v1();
 
     Map<String, dynamic> userData = {
       // C  : // Rows
+      "id": userID,
       "userName" : userName.text,
       "userAge" : userAge.text,
       "userGender" : userGender.text,
@@ -28,8 +31,10 @@ class _AddUserState extends State<AddUser> {
     };
 
                                      // TN
-    await FirebaseFirestore.instance.collection("users").add(userData);
+    // await FirebaseFirestore.instance.collection("users").add(userData); // Automatic ID Generate
+    await FirebaseFirestore.instance.collection("users").doc(userID).set(userData); // ID generate UUID
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Data Inserted")));
+    Navigator.pop(context);
   }
 
   @override
