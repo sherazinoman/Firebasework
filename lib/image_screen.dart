@@ -3,6 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 class ImageScreen extends StatefulWidget {
   const ImageScreen({super.key});
@@ -17,14 +18,18 @@ class _ImageScreenState extends State<ImageScreen> {
   final TextEditingController name = TextEditingController();
 
   void AddDataWithImage()async{
-    UploadTask uploadTask = FirebaseStorage.instance.ref().putData(webImage!);
+
+    String userID = Uuid().v1();
+
+    UploadTask uploadTask = FirebaseStorage.instance.ref().child("user").child(userID).putData(webImage!);
     TaskSnapshot taskSnapshot = await uploadTask;
     String userImage = await taskSnapshot.ref.getDownloadURL();
-    addData(userImage);
+    addData(userID ,userImage);
+    Navigator.pop(context);
   }
 
-  void addData(String? image){
-    FirebaseFirestore.instance.collection("imageuser").add({
+  void addData(String? userID,String? image){
+    FirebaseFirestore.instance.collection("imageuser").doc(userID).set({
       "name" : name.text,
       "image" : image
     });
