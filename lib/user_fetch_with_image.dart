@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:tts09bf/image_screen.dart';
 
@@ -29,6 +30,10 @@ class _UserFetchWithImageState extends State<UserFetchWithImage> {
                     backgroundImage: NetworkImage(userImage),
                   ),
                   title: Text(userName),
+                  trailing: IconButton(onPressed: ()async{
+                    await FirebaseFirestore.instance.collection("imageuser").doc(snapshot.data!.docs[index].id).delete();
+                    await FirebaseStorage.instance.refFromURL(userImage).delete();
+                  }, icon: Icon(Icons.delete,color: Colors.red,)),
                 );
               },);
             } else if (snapshot.hasError) {
